@@ -2,8 +2,15 @@ services:
   web:
     build: .
     image: muhammadraihanthaffanh/devops-lab:latest
+    container_name: devops-lab-web
     ports:
       - "3003:3000"
     environment:
       - PORT=3000
+    networks:
+      - monitoring_monitoring
     restart: unless-stopped
+
+networks:
+  monitoring_monitoring:
+    external: true

@@ -1,0 +1,29 @@
+{
+    "name": "devops-lab",
+    "version": "1.0.0",
+    "description": "Aplikassi todo kecil untuk latihan Devops (Docker, Jenkins, SonarQube, Prometheus, Kubernetes)",
+    "main": "app/server.js",
+    "scripts": {
+        "start": "node app/server.js",
+        "test": "jest --coverage"
+    },
+    "license": "MIT",
+    "dependencies": {
+        "express": "^4.21.1",
+        "prom-client": "^15.1.0"
+    },
+    "devDependencies": {
+        "jest": "^29.7.0",
+        "supertest": "^7.0.0"
+    },
+    "jest": {
+        "testEnvironment": "node",
+        "collectCoverageFrom": [
+            "app/**/*.js"
+        ],
+        "coverageReporters": [
+            "text",
+            "lcov"
+        ]
+    }
+}

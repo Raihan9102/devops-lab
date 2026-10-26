@@ -36,10 +36,36 @@ pipeline{
                 }
             }
         }
+        stage('Build'){
+            sh 'docker build -t $IMAGE:$TAG -t $IMAGE:latest .'
+        }
 
-
+        stage('Push'){
+            steps{
+                withCredentials([usernamePassword(crendentialsId: 'registry-cred',
+                usernameVariable: 'REG_USER', passwordVariable: 'REG_PASS')]){
+                sh 'echo $REG_PASS | docker login -u $REG_USER --password-stdin'
+                sh 'docker push $IMAGE:$TAG'
+                sh 'docker push $IMAGE:latest'
+                }
+            }
+        }
+        stage ('Deploy'){
+            steps{
+              sshagent(['vps-ssh']){
+                sh '''
+                ssh -o StrictHostKeyChecking=no ubuntu@43.173.15.95 \
+                    "cd ~/devops-lab && docker compose pull && docker compose up -d "  
+                '''
+            }   
+        }
+        
     }
+}
 
-
-
+post {
+    always {
+        sh 'docker logout || true'
+    }
+}
 }

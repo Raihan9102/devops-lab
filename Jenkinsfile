@@ -57,7 +57,7 @@ pipeline{
               sshagent(['vps-ssh']){
                 sh '''
                 ssh -o StrictHostKeyChecking=no ubuntu@43.173.15.95 \
-                    "cd ~/devops-lab && docker compose pull && docker compose up -d "  
+                    "cd ~/devops-lab && git pull origin main && docker compose pull && docker compose up -d "  
                 '''
             }   
         }

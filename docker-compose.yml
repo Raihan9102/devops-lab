@@ -1,7 +1,7 @@
 services:
   web:
     build: .
-    image: raihan9102/devops-lab:latest
+    image: muhammadraihanthaffanh/devops-lab:latest
     ports:
       - "3003:3000"
     environment:

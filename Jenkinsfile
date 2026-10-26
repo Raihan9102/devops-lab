@@ -6,6 +6,10 @@ pipeline{
         TAG = "${env.BUILD_NUMBER}"
     }
 
+    tools {
+        nodejs 'nodejs'
+    }
+
     stages{
         stage('Test'){
             steps{

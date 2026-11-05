@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: devops-lab-config
+  namespace: devops-lab
+  labels:
+    app.kubernetes.io/name: devops-lab
+data:
+  PORT: "3000"
+  NODE_ENV: "production"
+

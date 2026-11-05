@@ -1,0 +1,9 @@
+kubeconfig_path    = "~/.kube/config"
+kubeconfig_context = ""
+namespace          = "devops-lab"
+app_name           = "devops-lab"
+app_image          = "muhammadraihanthaffanh/devops-lab:latest"
+replica_count      = 2
+container_port     = 3000
+service_node_port  = 30080
+

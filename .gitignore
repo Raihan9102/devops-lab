@@ -11,3 +11,4 @@ jenkins_deploy*
 crash.log
 *.tfvars
 !*.tfvars.example
+!terraform/environments/*.tfvars

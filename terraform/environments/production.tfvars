@@ -1,0 +1,9 @@
+namespace         = "devops-lab-production"
+app_name          = "devops-lab-production"
+app_image         = "muhammadraihanthaffanh/devops-lab:latest"
+replica_count     = 2
+container_port    = 3000
+service_node_port = 30080
+enable_hpa        = true
+hpa_min_replicas  = 2
+hpa_max_replicas  = 5

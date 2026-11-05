@@ -156,10 +156,10 @@ pipeline {
         stage('Deploy') {
             steps {
                 sshagent(['vps-ssh']) {
-                    sh '''
-                    ssh -o StrictHostKeyChecking=no ubuntu@43.173.15.95 \
-                        "cd ~/devops-lab && git pull origin main && docker compose pull && docker compose up -d"
-                    '''
+                    sh """
+                    ssh -o StrictHostKeyChecking=no ubuntu@43.173.15.95 \\
+                        "kubectl set image deployment/devops-lab-app devops-lab=\${IMAGE}:\${TAG} -n devops-lab && kubectl rollout status deployment/devops-lab-app -n devops-lab"
+                    """
                 }
             }
         }
@@ -298,6 +298,21 @@ terraform apply -auto-approve
 # 5. Lihat output hasil deploy
 terraform output
 
-# 6. Menghapus resource jika sudah selesai latihan
-terraform destroy -auto-approve
+### Manajemen Multi-Environment (Staging & Production):
+Terraform menggunakan **Workspaces** untuk memisahkan state antara Staging dan Production di cluster K8s yang sama:
+
+```bash
+cd terraform
+
+# --- DEPLOY STAGING (1 Pod, Port 30081, No HPA) ---
+terraform workspace select -or-create staging
+terraform apply -var-file="environments/staging.tfvars" -auto-approve
+
+# --- DEPLOY PRODUCTION (2 Pods, Port 30080, Auto-scaling HPA) ---
+terraform workspace select -or-create production
+terraform apply -var-file="environments/production.tfvars" -auto-approve
+
+# Cek kedua environment berjalan bersamaan:
+kubectl get pods -n devops-lab-staging
+kubectl get pods -n devops-lab-production
 ```

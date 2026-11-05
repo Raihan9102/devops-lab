@@ -46,3 +46,21 @@ variable "service_node_port" {
   default     = 30080
 }
 
+
+variable "enable_hpa" {
+  description = "Aktifkan Autoscaling (HPA)"
+  type        = bool
+  default     = true
+}
+
+variable "hpa_min_replicas" {
+  description = "Jumlah minimum replica untuk HPA"
+  type        = number
+  default     = 2
+}
+
+variable "hpa_max_replicas" {
+  description = "Jumlah maksimum replica untuk HPA"
+  type        = number
+  default     = 5
+}

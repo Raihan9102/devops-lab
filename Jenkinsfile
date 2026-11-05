@@ -55,10 +55,10 @@ pipeline{
         stage ('Deploy'){
             steps{
               sshagent(['vps-ssh']){
-                sh '''
+                sh """
                 ssh -o StrictHostKeyChecking=no ubuntu@43.173.15.95 \
-                    "cd ~/devops-lab && git pull origin main && docker compose pull && docker compose up -d "  
-                '''
+                    "kubectl set image deployment/devops-lab-app devops-lab=${IMAGE}:${TAG} -n devops-lab && kubectl rollout status deployment/devops-lab-app -n devops-lab"
+                """
             }   
         }
         

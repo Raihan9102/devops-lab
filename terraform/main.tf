@@ -155,14 +155,16 @@ resource "kubernetes_service" "app_service" {
 
 # 5. Horizontal Pod Autoscaler (HPA)
 resource "kubernetes_horizontal_pod_autoscaler_v2" "app_hpa" {
+  count = var.enable_hpa ? 1 : 0
+
   metadata {
     name      = "${var.app_name}-hpa"
     namespace = kubernetes_namespace.app_namespace.metadata[0].name
   }
 
   spec {
-    min_replicas = 2
-    max_replicas = 5
+    min_replicas = var.hpa_min_replicas
+    max_replicas = var.hpa_max_replicas
 
     scale_target_ref {
       api_version = "apps/v1"
